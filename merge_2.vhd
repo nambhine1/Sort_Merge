@@ -40,44 +40,45 @@ entity merge_2 is
 end merge_2;
 
 architecture Behavioral of merge_2 is
-
+signal flag : std_logic;
 begin
 
 process (in2_1 , in2_2 , in2_3 , in2_4) is 
 begin
-    if (in2_1 <= in2_3) then
+  if ((in2_1 < in2_3) and (in2_2 <in2_3) and (in2_2 < in2_4)) then
         out2_1 <= in2_1;
-    elsif (in2_1 > in2_3) then 
-        out2_1 <= in2_3;
-    end if ;
-    -----------------------------
-    if (in2_2 <= in2_3 ) then
         out2_2 <= in2_2;
         out2_3 <= in2_3;
         out2_4 <= in2_4;
-    elsif (in2_2 <= in2_4) then
-        out2_2 <= in2_3;
-        out2_3 <= in2_2;
-        out2_4 <= in2_4;
-    else
+  elsif ((in2_1 < in2_3) and (in2_2 > in2_3) and (in2_2 > in2_4)) then
+        out2_1 <= in2_1;
         out2_2 <= in2_3;
         out2_3 <= in2_4;
         out2_4 <= in2_2;
-    end if;
-    ----------------------------
-   if (in2_4 <= in2_1 ) then
+  elsif ((in2_1 < in2_3) and (in2_2 > in2_3) and (in2_2 < in2_4)) then
+        out2_1 <= in2_1;
+        out2_2 <= in2_3;
+        out2_3 <= in2_2;
+        out2_4 <= in2_4;
+ elsif ((in2_1 > in2_3) and (in2_4 <in2_1) and (in2_4 < in2_2)) then
+        out2_1 <= in2_3;
         out2_2 <= in2_4;
         out2_3 <= in2_1;
         out2_4 <= in2_2;
-    elsif (in2_4 >= in2_2) then
+elsif ((in2_1 > in2_3) and (in2_4 >in2_1) and (in2_4 > in2_2)) then
+        out2_1 <= in2_3;
         out2_2 <= in2_1;
         out2_3 <= in2_2;
         out2_4 <= in2_4;
-    else
+
+elsif ((in2_1 > in2_3) and (in2_4 >in2_1) and (in2_4 < in2_2)) then
+        out2_1 <= in2_3;
         out2_2 <= in2_1;
         out2_3 <= in2_4;
         out2_4 <= in2_2;
-    end if;
+else
+  -- do nothing,  
+  end if;
 end process;
 
 end Behavioral;
